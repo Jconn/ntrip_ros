@@ -39,8 +39,11 @@ class ntripconnect(Thread):
             'Authorization': 'Basic ' + b64encode(self.ntc.ntrip_user + ':' + str(self.ntc.ntrip_pass))
         }
         connection = HTTPConnection(self.ntc.ntrip_server)
-        connection.request('GET', '/'+self.ntc.ntrip_stream, self.ntc.nmea_gga, headers)
+
+        now = datetime.utcnow()
+        connection.request('GET', '/'+self.ntc.ntrip_stream, self.ntc.nmea_gga % (now.hour, now.minute, now.second), headers)
         response = connection.getresponse()
+
         if response.status != 200: raise Exception("blah")
         buf = ""
         rmsg = Message()
