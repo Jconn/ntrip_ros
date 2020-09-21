@@ -82,7 +82,9 @@ class ntripconnect(Thread):
                     rmsg.header.stamp = rospy.get_rostime()
                     self.ntc.pub.publish(rmsg)
                     buf = ""
-                else: print (data)
+                else: 
+                    print("didn't receive data expected")
+                    #print (data)
             else:
                 ''' If zero length data, close connection and reopen it '''
                 restart_count = restart_count + 1
